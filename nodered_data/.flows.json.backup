@@ -30,7 +30,7 @@
         "type": "function",
         "z": "e78d12301678a8f8",
         "name": "function 1",
-        "func": "\nreturn msg;",
+        "func": "msg.payload = {\n    \"trang_thai\": \"thanh_cong\",\n    \"thong_diep\": \"Xin chao, API tao tu Node-RED da hoat dong!\"\n};\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,

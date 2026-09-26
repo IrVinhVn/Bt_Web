@@ -1,1 +1,36 @@
-<h1>Day la Website so 1</h1>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Goi API Node-RED</title>
+</head>
+<body>
+    <h1>Danh sách Sinh viên từ API Node-RED</h1>
+    <button onclick="layDuLieu()">Lấy dữ liệu</button>
+    <ul id="ket-qua"></ul>
+
+    <script>
+        // Hàm JS gọi API
+        function layDuLieu() {
+            // Vì đã có Nginx Proxy, ta chỉ cần gọi đường dẫn tương đối
+            fetch('/api/tacke')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok === 1) {
+                        let ds = data.dssv;
+                        let html = '';
+                        for (let i = 0; i < ds.length; i++) {
+                            html += `<li>Tên: <b>${ds[i].name}</b> - Tiền: ${ds[i].money}</li>`;
+                        }
+                        document.getElementById('ket-qua').innerHTML = html;
+                        console.log(data.msg); // Log chữ "thành công"
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('ket-qua').innerHTML = "Lỗi kết nối API!";
+                    console.error("Lỗi:", error);
+                });
+        }
+    </script>
+</body>
+</html>
