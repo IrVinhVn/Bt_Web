@@ -55,5 +55,54 @@
         "x": 650,
         "y": 280,
         "wires": []
+    },
+    {
+        "id": "18229fcb7ddec191",
+        "type": "http in",
+        "z": "e78d12301678a8f8",
+        "name": "",
+        "url": "/api/Vinh2",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 400,
+        "wires": [
+            [
+                "ef7029a22ec5ae69"
+            ]
+        ]
+    },
+    {
+        "id": "ef7029a22ec5ae69",
+        "type": "function",
+        "z": "e78d12301678a8f8",
+        "name": "function 2",
+        "func": "// Thuật toán tạo dữ liệu danh sách sinh viên với số tiền ngẫu nhiên\nlet danhSachTen = [\"Cốp\", \"David\", \"Vinh\", \"Hải\"];\nlet dssv = [];\n\nfor (let i = 0; i < danhSachTen.length; i++) {\n    dssv.push({\n        \"name\": danhSachTen[i],\n        \"money\": Math.floor(Math.random() * 1000) + 100 // Random từ 100 đến 1099\n    });\n}\n\n// Đóng gói thành định dạng JSON đúng yêu cầu đề bài\nmsg.payload = {\n    \"ok\": 1,\n    \"msg\": \"thành công\",\n    \"dssv\": dssv\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 400,
+        "wires": [
+            [
+                "6d887cda9b0c108f"
+            ]
+        ]
+    },
+    {
+        "id": "6d887cda9b0c108f",
+        "type": "http response",
+        "z": "e78d12301678a8f8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 650,
+        "y": 400,
+        "wires": []
     }
 ]
