@@ -1,1 +1,73 @@
-<h1>Day la Website so 2</h1>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site 2: Quản lý sinh viên</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background-color: #f0f8ff; margin: 50px; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
+        h2 { color: #333; text-align: center; }
+        button { display: block; margin: 0 auto 20px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>WEBSITE SỐ 2: DANH SÁCH HỌC BỔNG</h2>
+        <button onclick="taiDuLieu()">Lấy dữ liệu từ Node-RED</button>
+        
+        <table id="bang-sinh-vien">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên Sinh Viên</th>
+                    <th>Số Tiền (VNĐ)</th>
+                </tr>
+            </thead>
+            <tbody id="du-lieu-bang">
+                <tr>
+                    <td colspan="3" style="text-align: center; color: gray;">Chưa có dữ liệu</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function taiDuLieu() {
+            const tbody = document.getElementById("du-lieu-bang");
+            tbody.innerHTML = "<tr><td colspan='3' style='text-align:center;'>Đang tải...</td></tr>";
+
+            fetch('/api/tacke')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok === 1) {
+                        let html = "";
+                        // Dùng forEach kết hợp với index để tạo cột Số thứ tự (STT)
+                        data.dssv.forEach((sv, index) => {
+                            html += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td style="font-weight: bold;">${sv.name}</td>
+                                    <td style="color: #28a745; font-weight: bold;">${sv.money}</td>
+                                </tr>
+                            `;
+                        });
+                        tbody.innerHTML = html;
+                    } else {
+                        tbody.innerHTML = "<tr><td colspan='3' style='color:red; text-align:center;'>Lỗi dữ liệu</td></tr>";
+                    }
+                })
+                .catch(err => {
+                    tbody.innerHTML = `<tr><td colspan='3' style='color:red; text-align:center;'>Lỗi kết nối: ${err.message}</td></tr>`;
+                });
+        }
+    </script>
+
+</body>
+</html>
