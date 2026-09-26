@@ -21,10 +21,10 @@ services:
     image: mariadb:10.11
     container_name: mariadb_btweb
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: "123456"
       MYSQL_DATABASE: web_db
       MYSQL_USER: vinh
-      MYSQL_PASSWORD: 123456
+      MYSQL_PASSWORD: "123456"
     ports:
       - "3306:3306"
     volumes:
@@ -40,4 +40,12 @@ services:
       - "8081:80"
     depends_on:
       - mariadb
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared_btweb
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiNDhlMWU4MWUzY2MzOTcxNDlmMDg0MDk4OTU4YzUxNTUiLCJ0IjoiZWVhZmE2MDEtZTFkMi00YWNjLTliZWMtNzUxMmMxMDU1MDRjIiwicyI6Ik5UbGlNRE5tWlRVdE56bGpaaTAwWm1NMkxUZ3pOV010T1dJMk1qWmxaak5pTVdGayJ9
     restart: unless-stopped
