@@ -43,7 +43,7 @@
             const tbody = document.getElementById("du-lieu-bang");
             tbody.innerHTML = "<tr><td colspan='3' style='text-align:center;'>Đang tải...</td></tr>";
 
-            fetch('/api/tacke')
+            fetch('/api/Vinh2')
                 .then(res => res.json())
                 .then(data => {
                     if (data.ok === 1) {
