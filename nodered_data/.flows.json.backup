@@ -1,0 +1,59 @@
+[
+    {
+        "id": "e78d12301678a8f8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "454fcc0878b2f961",
+        "type": "http in",
+        "z": "e78d12301678a8f8",
+        "name": "",
+        "url": "/api/test",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "e198c67618e93ec4"
+            ]
+        ]
+    },
+    {
+        "id": "e198c67618e93ec4",
+        "type": "function",
+        "z": "e78d12301678a8f8",
+        "name": "function 1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 280,
+        "wires": [
+            [
+                "f86b48232aa2eaa1"
+            ]
+        ]
+    },
+    {
+        "id": "f86b48232aa2eaa1",
+        "type": "http response",
+        "z": "e78d12301678a8f8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 650,
+        "y": 280,
+        "wires": []
+    }
+]
