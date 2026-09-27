@@ -1,4 +1,13 @@
 # Bài tập Lập trình Web
+# Bài tập 2
+## Yêu cầu 1
+<img width="1852" height="433" alt="image" src="https://github.com/user-attachments/assets/bc91b6b2-d2ff-4415-98aa-e2f9312c4d3b" />
+
+## Yêu cầu 2
+<img width="1849" height="922" alt="image" src="https://github.com/user-attachments/assets/3fa91f7a-8306-41cf-b3e4-d48e2b9011a7" />
+
+## Yêu cầu 3
+<img width="1845" height="1008" alt="image" src="https://github.com/user-attachments/assets/0065e0e5-f421-46ca-85cc-49b5145ef3fa" />
 
 
 # Bài tập An toàn thông tin
