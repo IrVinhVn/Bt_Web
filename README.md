@@ -58,7 +58,7 @@ AES được công bố vào năm 2001 để thay thế DES. Đây là chuẩn m
 
 **Quy trình giải mã:**
 Áp dụng các hàm ngược của quá trình mã hóa (`InvShiftRows`, `InvSubBytes`, `AddRoundKey`, `InvMixColumns`) và sử dụng các khóa phụ theo thứ tự từ cuối lên đầu.
-## 2. Cài đặt thuật toán AES bằng Python
+## 1.3. Cài đặt thuật toán AES bằng Python
 
 Chương trình sử dụng thư viện `pycryptodome` để mô phỏng quy trình mã hóa và giải mã AES ở chế độ CBC (Cipher Block Chaining).
 
@@ -74,3 +74,43 @@ Chương trình đã thực hiện:
 2. Sinh Vector khởi tạo (IV) ngẫu nhiên.
 3. Mã hóa văn bản và xuất ra định dạng Base64.
 4. Tách IV, giải mã và hiển thị lại văn bản gốc thành công.
+
+---
+
+## 2. Tìm hiểu thuật toán mã hóa bất đối xứng RSA
+
+RSA (Rivest–Shamir–Adleman) là một trong những thuật toán mã hóa khóa công khai (bất đối xứng) đầu tiên và được sử dụng rộng rãi nhất hiện nay. Khác với mã hóa đối xứng (DES/AES) dùng chung 1 khóa, hệ mật mã bất đối xứng sử dụng một cặp khóa: **Khóa công khai (Public Key)** để mã hóa và **Khóa bí mật (Private Key)** để giải mã. 
+
+Sức mạnh bảo mật của RSA dựa trên độ khó của bài toán toán học: Rất dễ để nhân hai số nguyên tố lớn với nhau, nhưng cực kỳ khó (gần như không thể với máy tính hiện tại) để từ tích số đó phân tích ngược lại ra hai số nguyên tố ban đầu.
+
+### 2.1. Nguyên lý sinh cặp khóa (Key Generation)
+
+Quy trình tạo ra cặp khóa công khai và khóa bí mật trải qua 5 bước toán học sau:
+
+1. **Chọn số nguyên tố:** Chọn 2 số nguyên tố phân biệt rất lớn, gọi là `p` và `q` (thường được sinh ngẫu nhiên).
+2. **Tính Module (n):** Tính `n = p * q`. Số `n` này sẽ được dùng làm module cho cả hai khóa (độ dài của `n` chính là độ dài của khóa RSA, ví dụ 2048-bit).
+3. **Tính hàm phi Euler (φ):** Tính giá trị `phi(n) = (p - 1) * (q - 1)`.
+4. **Chọn khóa công khai (e):** Chọn một số nguyên dương `e` thỏa mãn 2 điều kiện:
+   * `1 < e < phi(n)`.
+   * `e` và `phi(n)` là hai số nguyên tố cùng nhau (Ước chung lớn nhất bằng 1).
+   *(Thông thường, `e` được chọn là 65537 để tối ưu tốc độ tính toán).*
+5. **Tính khóa bí mật (d):** Tìm số `d` sao cho `d` là nghịch đảo nhân của `e` theo module `phi(n)`. 
+   * Công thức toán học: `(d * e) mod phi(n) = 1`. 
+   * *(Người ta thường dùng thuật toán Euclid mở rộng để tính ra d).*
+
+**Tổng kết cặp khóa:**
+* **Khóa công khai (Public Key):** Là cặp số `(n, e)`. Bất kỳ ai cũng có thể biết khóa này để gửi tin nhắn bảo mật cho bạn.
+* **Khóa bí mật (Private Key):** Là cặp số `(n, d)`. Chỉ duy nhất bạn được giữ kín để mở tin nhắn. Các giá trị `p`, `q` và `phi(n)` cũng phải được hủy bỏ hoặc giữ bí mật.
+
+### 2.2. Quy trình mã hóa và giải mã
+
+Giả sử Alice muốn gửi một tin nhắn bảo mật (bản rõ `M`) cho Bob.
+
+* **Quy trình mã hóa (Encryption):** 
+  Alice sử dụng Khóa công khai `(n, e)` của Bob để tạo ra bản mã `C` theo công thức:
+  **C = M^e mod n**
+  *(Lúc này, dù tin nhắn bị chặn trên đường truyền, hacker không thể đọc được vì không có khóa bí mật).*
+
+* **Quy trình giải mã (Decryption):** 
+  Bob nhận được bản mã `C`. Bob sử dụng Khóa bí mật `(n, d)` của mình để tính ngược lại ra bản rõ `M`:
+  **M = C^d mod n**
