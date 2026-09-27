@@ -113,8 +113,8 @@ Giả sử Alice muốn gửi một tin nhắn bảo mật (bản rõ `M`) cho B
 
 * **Quy trình giải mã (Decryption):** 
   Bob nhận được bản mã `C`. Bob sử dụng Khóa bí mật `(n, d)` của mình để tính ngược lại ra bản rõ `M`:
-  **M = C^d mod n**
-### 3.3. Các mô hình áp dụng thuật toán RSA
+  **$M = C^d \bmod n$**
+### 2.3. Các mô hình áp dụng thuật toán RSA
 
 Dựa vào cách kết hợp và sử dụng cặp khóa, RSA có thể giải quyết các bài toán về bảo mật và xác thực khác nhau:
 
