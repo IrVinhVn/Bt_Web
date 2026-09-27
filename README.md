@@ -114,3 +114,42 @@ Giả sử Alice muốn gửi một tin nhắn bảo mật (bản rõ `M`) cho B
 * **Quy trình giải mã (Decryption):** 
   Bob nhận được bản mã `C`. Bob sử dụng Khóa bí mật `(n, d)` của mình để tính ngược lại ra bản rõ `M`:
   **M = C^d mod n**
+### 3.3. Các mô hình áp dụng thuật toán RSA
+
+Dựa vào cách kết hợp và sử dụng cặp khóa, RSA có thể giải quyết các bài toán về bảo mật và xác thực khác nhau:
+
+*   **Mô hình mã hóa bảo mật (Xác thực người nhận):**
+    *   *Cách hoạt động:* Người gửi (Alice) dùng **Khóa công khai** của người nhận (Bob) để mã hóa thông điệp. Bob sau khi nhận được sẽ dùng **Khóa bí mật** của chính mình để giải mã.
+    *   *Ý nghĩa:* Đảm bảo tính bí mật (Confidentiality). Chỉ có người nhận hợp pháp (Bob) mới có thể đọc được dữ liệu.
+
+*   **Mô hình chữ ký số (Xác thực người gửi):**
+    *   *Cách hoạt động:* Người gửi (Alice) dùng **Khóa bí mật** của chính mình để mã hóa dữ liệu (thực tế thường là mã hóa giá trị băm Hash của dữ liệu). Người nhận (Bob) dùng **Khóa công khai** của Alice để giải mã và đối chiếu.
+    *   *Ý nghĩa:* Đảm bảo tính xác thực và chống chối bỏ (Authentication & Non-repudiation). Bob chắc chắn rằng thông điệp này được gửi từ chính Alice và không bị kẻ gian giả mạo.
+
+*   **Mô hình kết hợp (Xác thực cả hai chiều):**
+    *   *Cách hoạt động:* Alice ký chữ ký số vào thông điệp bằng **Khóa bí mật của Alice**, sau đó mã hóa toàn bộ khối dữ liệu đó bằng **Khóa công khai của Bob**. Khi nhận được, Bob dùng **Khóa bí mật của Bob** để giải mã lấy gói dữ liệu, rồi dùng **Khóa công khai của Alice** để xác thực chữ ký.
+    *   *Ý nghĩa:* Đạt được tính bảo mật toàn diện: Gửi đi an toàn tuyệt đối và xác minh chính xác danh tính người gửi.
+
+---
+
+### 3. So sánh thời gian mã hóa/giải mã của RSA và AES
+
+| Tiêu chí | Mã hóa đối xứng (AES) | Mã hóa bất đối xứng (RSA) |
+| :--- | :--- | :--- |
+| **Bản chất phép toán** | Phép toán logic cơ bản, dịch bit, ma trận đơn giản. | Phép toán số học module lũy thừa với các số nguyên tố khổng lồ. |
+| **Tốc độ (Hiệu năng)** | **Rất nhanh.** Nhanh hơn RSA từ hàng trăm đến hàng nghìn lần. | **Rất chậm.** Tiêu tốn cực kỳ nhiều tài nguyên tính toán của CPU. |
+| **Kích thước đầu vào** | Có thể mã hóa lượng dữ liệu khổng lồ vô hạn (Video, File lớn). | Bị giới hạn kích thước (Dữ liệu đầu vào phải nhỏ hơn độ dài khóa). |
+| **Mục đích tối ưu** | Dùng để mã hóa dữ liệu thực tế (Bulk Encryption). | Dùng để trao đổi khóa và xác thực danh tính. |
+
+---
+
+### 4. Sự kết hợp sức mạnh giữa RSA và AES (Mã hóa lai - Hybrid Encryption)
+
+Vì AES gặp khó khăn trong việc gửi khóa bí mật đi an toàn qua mạng, còn RSA lại quá chậm để mã hóa những file dung lượng lớn, hệ thống bảo mật hiện đại (như SSL/TLS cho web HTTPS, SSH, hay PGP) đã kết hợp cả hai thuật toán này thành **Hệ mật mã lai**:
+
+**Quy trình hoạt động kết hợp:**
+1. **Sinh khóa phiên (Session Key):** Máy tính của người gửi tự động tạo ra một khóa AES dùng một lần (rất nhanh).
+2. **Mã hóa dữ liệu bằng AES:** Sử dụng khóa AES vừa tạo để mã hóa toàn bộ file dữ liệu (Giải quyết điểm yếu tốc độ của RSA).
+3. **Bọc khóa bằng RSA:** Người gửi dùng Khóa công khai RSA của người nhận để mã hóa chính cái "khóa AES" kia (Giải quyết điểm yếu trao đổi khóa của AES).
+4. **Truyền đi:** Người gửi gửi cả hai phần (Dữ liệu đã mã hóa + Khóa phiên đã mã hóa) cho người nhận.
+5. **Giải mã:** Người nhận dùng Khóa bí mật RSA của mình để mở gói lấy ra "Khóa phiên AES", sau đó dùng Khóa phiên AES để giải mã lấy file dữ liệu gốc.
