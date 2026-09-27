@@ -58,3 +58,19 @@ AES được công bố vào năm 2001 để thay thế DES. Đây là chuẩn m
 
 **Quy trình giải mã:**
 Áp dụng các hàm ngược của quá trình mã hóa (`InvShiftRows`, `InvSubBytes`, `AddRoundKey`, `InvMixColumns`) và sử dụng các khóa phụ theo thứ tự từ cuối lên đầu.
+## 2. Cài đặt thuật toán AES bằng Python
+
+Chương trình sử dụng thư viện `pycryptodome` để mô phỏng quy trình mã hóa và giải mã AES ở chế độ CBC (Cipher Block Chaining).
+
+**Yêu cầu cài đặt:**
+`pip install pycryptodome`
+
+**Mã nguồn Python:**
+(Đã đính kèm trong file `bai1_aes.py` trên thư mục này).
+
+**Kết quả chạy thử nghiệm:**
+Chương trình đã thực hiện:
+1. Đệm dữ liệu (Padding) đạt chuẩn block size.
+2. Sinh Vector khởi tạo (IV) ngẫu nhiên.
+3. Mã hóa văn bản và xuất ra định dạng Base64.
+4. Tách IV, giải mã và hiển thị lại văn bản gốc thành công.
