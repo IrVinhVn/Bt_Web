@@ -4,8 +4,8 @@
 # Bài tập An toàn thông tin
 # 🛡️ Bài Tập 1: An Toàn và Bảo Mật Thông Tin
 
-**Sinh viên thực hiện:** [Điền tên của bạn]  
-**Mã sinh viên:** [Điền mã SV]  
+**Sinh viên thực hiện:** Hoàng Công Vinh  
+**Mã sinh viên:** K235480106100.  
 
 ---
 
