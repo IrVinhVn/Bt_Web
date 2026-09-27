@@ -66,7 +66,7 @@ Chương trình sử dụng thư viện `pycryptodome` để mô phỏng quy tr�
 `pip install pycryptodome`
 
 **Mã nguồn Python:**
-(Đã đính kèm trong file `bai1_aes.py` trên thư mục này).
+Đã đính kèm trong file 👉 [bai1_aes.py](bai1_aes.py)
 
 **Kết quả chạy thử nghiệm:**
 Chương trình đã thực hiện:
